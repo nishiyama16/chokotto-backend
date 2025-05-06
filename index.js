@@ -1,5 +1,5 @@
 const express = require('express');
-const OpenAI = require('openai');
+const { OpenAI } = require('openai');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config();
 
@@ -7,15 +7,18 @@ const app = express();
 app.use(express.json());
 app.use(require('cors')());
 
+// OpenAIの初期化（v4用）
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// Supabaseの初期化
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_KEY
 );
 
+// チャット用エンドポイント
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
 
